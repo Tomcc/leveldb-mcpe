@@ -44,13 +44,15 @@ list(APPEND SOURCES db/zstd_compressor.cc)
 
 include_directories(. include)
 
+add_definitions("-DDLLX=")
+
 if (UNIX)
     list(APPEND SOURCES port/port_posix.cc)
     list(APPEND SOURCES util/env_posix.cc)
 
-    add_definitions(-DLEVELDB_PLATFORM_POSIX "-DDLLX=")
+    add_definitions("-DLEVELDB_PLATFORM_POSIX")
     if(APPLE)
-        add_definitions(-DOS_MACOSX)
+        add_definitions("-DOS_MACOSX")
     endif()
 
     CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -70,7 +72,7 @@ elseif (WIN32)
     list(APPEND SOURCES util/env_win_detail/win_time.cc)
     list(APPEND SOURCES util/env_win_detail/winapi.cc)
 
-    add_definitions(-DLEVELDB_PLATFORM_WINDOWS)
+    add_definitions("-DLEVELDB_PLATFORM_WINDOWS")
 endif()
 
 add_library(leveldb ${SOURCES})
